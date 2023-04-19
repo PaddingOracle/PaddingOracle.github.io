@@ -1,26 +1,6 @@
-main {
-    min-width: 100vw;
-    min-height: 100vh;
-    background-color: #e2e2e2;
-}
+.padding-oracle {}
 
-.padding-oracle {
-    width: 900px;
-    height: 600px;
-    min-width: 70vw;
-    min-height: 70vh;
-    position: relative;
-    top: 50px;
-    margin: auto;
-    z-index: 1;
-}
-
-.ciphertext-1 {
-    position: relative;
-    width: 20%;
-    top: 60px;
-    left: 100px;
-}
+.ciphertext-1 {}
 
 .ciphertext-1 * {
     width: fit-content;
@@ -30,12 +10,15 @@ main {
 .input-wrapper {
     margin-top: 5px;
     display: flex;
-    width: 100%;
+    flex-direction: row;
+    justify-content: center;
+    width: 350px;
 }
 
 .input-wrapper input {
-
-    width: 10%;
+    min-width: 0;
+    flex-grow: 1;
+    text-align: center;
 }
 
 .arrow-down {
@@ -48,7 +31,8 @@ main {
 }
 
 
-.long-arrow-down, .long-arrow-right {
+.long-arrow-down,
+.long-arrow-right {
     display: block;
     margin: 30px auto;
     width: 25px;
@@ -58,54 +42,57 @@ main {
     margin-bottom: 10px;
 }
 
-.long-arrow-down{
-   transform: rotate(225deg);
+.long-arrow-down {
+    transform: rotate(225deg);
 }
-.long-arrow-right{
+
+.long-arrow-right {
     translate: 30px -20px;
     transform: rotate(135deg);
- }
-
-.long-arrow-down::after, .long-arrow-right::after{
-  content: "";
-  display: block;
-  width: 2px;
-  height: 45px;
-  background-color: black;
-  transform: rotate(-45deg) translate(15px, 4px);
-  left: 0;
-  top: 0;
 }
 
-.initilization-vector-wrapper-div{
+.long-arrow-down::after,
+.long-arrow-right::after {
+    content: "";
+    display: block;
+    width: 2px;
+    height: 45px;
+    background-color: black;
+    transform: rotate(-45deg) translate(15px, 4px);
+    left: 0;
+    top: 0;
+}
+
+.initilization-vector-wrapper-div {
     position: absolute;
     width: 100%;
     right: 185px;
     margin-top: 40px;
     z-index: 5;
 }
+
 .arrow-init-combo {
     display: flex;
 }
 
-.xor-png{
+.xor-png {
     width: 20px;
     height: 20px;
     margin: auto;
 }
+
 .xor-div {
     position: relative;
     height: fit-content;
     padding: 0;
-    
+
     top: 0px;
     scale: 1.5;
 }
 
-.after-xor-div{ 
-}
+.after-xor-div {}
 
-.key-vector-wrapper-div{
+.key-vector-wrapper-div {
     position: absolute;
     width: 100%;
     height: 100%;
@@ -113,6 +100,6 @@ main {
     margin-top: -10px;
 }
 
-.plaintext-1-input{
+.plaintext-1-input {
     z-index: 100;
 }
