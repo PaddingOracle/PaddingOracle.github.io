@@ -2,7 +2,7 @@
     margin: 20px;
 }
 
-.ciphertext-1 {
+.cbc-encrypt {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -13,7 +13,7 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
-    width: 350px;
+    width: 450px;
 }
 
 .input-wrapper input {
@@ -56,14 +56,14 @@
     padding-right: 5px;
 }
 
-.initialization-vector-xor-wrapper {
+.init-vector-xor-wrapper {
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin-left: -410px;
+    margin-left: -510px;
 }
 
-.initialization-vector-wrapper {
+.init-vector-wrapper {
     display: flex;
     flex-direction: column;
     align-items: center;
