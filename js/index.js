@@ -57,15 +57,13 @@ function xor(hex1, hex2) {
 
 // generate a plaintext
 let unpad_plaintexts = [
-    "decafc0ffee15de1ec7ab1e0",
-    "a1eaf5a1ad15ea7ab1e0",
-    "d0cde7ec7edab100dc1070"
+    "a900ddecafc0ffee15de1ec7ab1e",
+    "1eaf5a1ad15ea7ab1e",
+    "c01ede7ec7edab100dc107"
 ];
 
 function get_random_int(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min) + min); // The maximum is exclusive and the minimum is inclusive
+    return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
 function gen_plaintext() {
