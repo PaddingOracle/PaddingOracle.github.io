@@ -59,7 +59,7 @@ function xor(hex1, hex2) {
 let unpad_plaintexts = [
     "a900ddecafc0ffee15de1ec7ab1e",
     "1eaf5a1ad15ea7ab1e",
-    "c01ede7ec7edab100dc107"
+    "c01ede7ec7edab100dc107",
 ];
 
 function get_random_int(min, max) {
