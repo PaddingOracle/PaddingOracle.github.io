@@ -14,6 +14,7 @@
     flex-direction: row;
     justify-content: center;
     width: 450px;
+    z-index: 50;
 }
 
 .input-wrapper input {
@@ -87,7 +88,34 @@
     margin-right: 5px;
     margin-bottom: auto;
 }
+.decrypt-text-input {
+    position: relative;
+}
+.plaintext-input {
+    position: relative;
+}
 
 .xor-div input{
     width: 30px;
 }
+
+.cover {
+    background-color: darkblue;
+    position: absolute;
+    width: 100%;
+    padding: 20px;
+    height: 100%;
+    z-index: 100;
+    cursor: pointer;
+}
+.cover p {
+    color: white;
+    width: 100%;
+    text-align: center;
+    font-size: 1rem;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
