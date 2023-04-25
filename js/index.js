@@ -4,12 +4,11 @@ decrypt_text_input = document.querySelectorAll(".decrypt-text-input >  input");
 init_vector_input = document.querySelectorAll(".init-vector-input >  input");
 plaintext_input = document.querySelectorAll(".plaintext-input >  input");
 
-
 // read and write to inputs
 function read_input(input) {
     let hex = "";
     for (let i = 0; i < 16; ++i) {
-        let hex = hex + input[i].value;
+        hex = hex + input[i].value;
     }
     return hex;
 }
