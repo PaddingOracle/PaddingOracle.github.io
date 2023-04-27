@@ -50,7 +50,7 @@ function update_valid_box(plaintext) {
 // xor of two hex strings
 function xor(hex1, hex2) {
     let hex3 = "";
-    for (let i = 0; i < 16; ++i) {
+    for (let i = 0; i < hex1.length / 2; ++i) {
         let hex1_slice = hex1.slice(2 * i, 2 * i + 2);
         let hex2_slice = hex2.slice(2 * i, 2 * i + 2);
         let dec1_slice = parseInt(hex1_slice, 16);
@@ -110,10 +110,25 @@ function update() {
 
     let regexp = /[0-9a-f]{32}/g;
     if (regexp.test(init_vector_hex)) {
-        console.log("edited")
         let plaintext_hex = xor(init_vector_hex, decrypt_text_hex);
         write_input(plaintext_input, plaintext_hex);
         update_valid_box(plaintext_hex);
+    }
+}
+
+// update the xor equation output
+xor_input = document.querySelectorAll(".xor-equation >  input");
+function update_xor() {
+    let in1 = xor_input[0].value;
+    let in2 = xor_input[1].value;
+    console.log("yo")
+
+    let regexp = /[0-9a-f]{2}/g;
+    if (regexp.test(in1)) {
+        regexp.lastIndex = 0;
+        if (regexp.test(in2)) {
+            xor_input[2].value = xor(in1, in2);
+        }
     }
 }
 
