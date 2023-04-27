@@ -20,25 +20,6 @@ function write_input(input, hex) {
 }
 
 
-// convert between hex and uint8 arrays
-function hex_to_uint8_arr(hex) {
-    let uint8_arr = new Uint8Array(16);
-    for (let i = 0; i < 16; ++i) {
-        let hex_pair = hex.slice(2 * i, 2 * i + 2);
-        uint8_arr[i] = parseInt(hex_pair, 16);
-    }
-    return uint8_arr;
-}
-
-function uint8_arr_to_hex(uint8_arr) {
-    let hex = "";
-    for (let i = 0; i < 16; ++i) {
-        hex = hex + uint8_arr[i].toString(16).padStart(2, '0');
-    }
-    return hex;
-}
-
-
 // xor of two hex strings
 function xor(hex1, hex2) {
     let hex3 = "";
@@ -73,53 +54,25 @@ function gen_plaintext() {
 }
 
 
-// generate an initialization vector
-function gen_init_vec() {
-    let init_vec = "";
+// generate a random hex string
+function gen_rand_hex() {
+    let rand_hex = "";
     for (let i = 0; i < 32; ++i) {
-        init_vec = init_vec + get_random_int(0, 15).toString(16);
+        rand_hex = rand_hex + get_random_int(0, 15).toString(16);
     }
-    return init_vec;
+    return rand_hex;
 }
 
 // initialize all inputs
 async function init() {
     let plaintext_hex = gen_plaintext();
-    let init_vector_hex = gen_init_vec();
+    let ciphertext_hex = gen_rand_hex()
+    let init_vector_hex = gen_rand_hex();
 
+    write_input(plaintext_input, plaintext_hex);
+    write_input(ciphertext_input, ciphertext_hex);
     write_input(init_vector_input, init_vector_hex);
-
-    let key = await window.crypto.subtle.generateKey(
-        {
-            name: "AES-CBC",
-            length: 256,
-        },
-        true,
-        ["encrypt", "decrypt"]
-    );
-
-    let ciphertext_uint8_arr = new Uint8Array(await window.crypto.subtle.encrypt(
-        {
-            name: "AES-CBC",
-            iv: hex_to_uint8_arr(init_vector_hex)
-        },
-        key,
-        hex_to_uint8_arr(plaintext_hex)
-    ));
-
-    write_input(ciphertext_input, uint8_arr_to_hex(ciphertext_uint8_arr));
-
-    let decrypt_text_uint8_arr = new Uint8Array(await window.crypto.subtle.decrypt(
-        {
-            name: "AES-CBC",
-            iv: hex_to_uint8_arr("00000000000000000000000000000000")
-        },
-        key,
-        ciphertext_uint8_arr.buffer));
-
-    write_input(decrypt_text_input, uint8_arr_to_hex(decrypt_text_uint8_arr));
-
-    write_input(plaintext_input, xor(init_vector_hex, uint8_arr_to_hex(decrypt_text_uint8_arr)));
+    write_input(decrypt_text_input, xor(init_vector_hex, plaintext_hex));
 }
 
 init();
