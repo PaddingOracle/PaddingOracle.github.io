@@ -37,11 +37,11 @@ function is_valid(hex) {
 let valid_box = document.querySelector(".plaintext-validity");
 function update_valid_box(plaintext) {
     if (is_valid(plaintext)) {
-        valid_box.innerHTML = "Plaintext is Valid";
+        valid_box.innerHTML = "Padding is Valid";
         valid_box.style.color = "green";
     }
     else {
-        valid_box.innerHTML = "Plaintext is Invalid";
+        valid_box.innerHTML = "Padding is Invalid";
         valid_box.style.color = "red";
     }
 }
