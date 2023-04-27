@@ -53,7 +53,7 @@
                 <h4>Decrypted Text</h4>
                 <div class="decrypt-text-input input-wrapper">
                     <div class="cover cover-decrypt">
-                        <p>Press me to Reveal Decrypted Text</p>
+                        <p>Press Me to Reveal the Decrypted Text</p>
                     </div>
                     <input tpye="" class="decrypt-text-input-1" disabled maxlength="2">
                     <input type="" class="decrypt-text-input-2" disabled maxlength="2">
@@ -106,7 +106,7 @@
                 <h4>Plaintext</h4>
                 <div class="plaintext-input input-wrapper">
                     <div class="cover cover-plaintext ">
-                        <p>Press me to Reveal Plaintext</p>
+                        <p>Press Me to Reveal the Plaintext</p>
                     </div>
                     <input type="" class="plaintext-input-1" disabled maxlength="2">
                     <input type="" class="plaintext-input-2" disabled maxlength="2">
@@ -130,13 +130,19 @@
             </div>
         </div>
         <div class="sidepanel">
-            <h4>XOR CALCULATOR</h4>
-            <div class="xor-equation">
-                <input type="text" maxlength="2" oninput="update_xor()">
-                <div class="large-font">&oplus;</div>
-                <input type="text" maxlength="2" oninput="update_xor()">
-                <div class="large-font">&equals;</div>
-                <input type="text" disabled maxlength="2">
+            <div class="sidepanel-element">
+                <h4>XOR Calculator</h4>
+                <div class="xor-equation">
+                    <input type="text" maxlength="2" oninput="update_xor()">
+                    <div class="large-font">&oplus;</div>
+                    <input type="text" maxlength="2" oninput="update_xor()">
+                    <div class="large-font">&equals;</div>
+                    <input type="text" disabled maxlength="2">
+                </div>
+            </div>
+            <div class="sidepanel-element">
+                <h4>Scratch Work</h4>
+                <textarea rows="10" cols="30"></textarea>
             </div>
         </div>
     </div>
