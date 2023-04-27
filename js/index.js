@@ -4,6 +4,7 @@ decrypt_text_input = document.querySelectorAll(".decrypt-text-input >  input");
 init_vector_input = document.querySelectorAll(".init-vector-input >  input");
 plaintext_input = document.querySelectorAll(".plaintext-input >  input");
 
+
 // read and write to inputs
 function read_input(input) {
     let hex = "";
@@ -20,29 +21,36 @@ function write_input(input, hex) {
 }
 
 
-// convert between hex and uint8 arrays
-function hex_to_uint8_arr(hex) {
-    let uint8_arr = new Uint8Array(16);
-    for (let i = 0; i < 16; ++i) {
-        let hex_pair = hex.slice(2 * i, 2 * i + 2);
-        uint8_arr[i] = parseInt(hex_pair, 16);
+// update the plaintext validity box
+function is_valid(hex) {
+    for (let i = 1; i <= 16; ++i) {
+        let byte = i.toString().padStart(2, '0');
+
+        if (hex.endsWith(byte.repeat(i))) {
+            return true;
+        }
     }
-    return uint8_arr;
+    return false;
 }
 
-function uint8_arr_to_hex(uint8_arr) {
-    let hex = "";
-    for (let i = 0; i < 16; ++i) {
-        hex = hex + uint8_arr[i].toString(16).padStart(2, '0');
+
+let valid_box = document.querySelector(".plaintext-validity");
+function update_valid_box(plaintext) {
+    if (is_valid(plaintext)) {
+        valid_box.innerHTML = "Plaintext is Valid";
+        valid_box.style.color = "green";
     }
-    return hex;
+    else {
+        valid_box.innerHTML = "Plaintext is Invalid";
+        valid_box.style.color = "red";
+    }
 }
 
 
 // xor of two hex strings
 function xor(hex1, hex2) {
     let hex3 = "";
-    for (let i = 0; i < 16; ++i) {
+    for (let i = 0; i < hex1.length / 2; ++i) {
         let hex1_slice = hex1.slice(2 * i, 2 * i + 2);
         let hex2_slice = hex2.slice(2 * i, 2 * i + 2);
         let dec1_slice = parseInt(hex1_slice, 16);
@@ -73,53 +81,55 @@ function gen_plaintext() {
 }
 
 
-// generate an initialization vector
-function gen_init_vec() {
-    let init_vec = "";
+// generate a random hex string
+function gen_rand_hex() {
+    let rand_hex = "";
     for (let i = 0; i < 32; ++i) {
-        init_vec = init_vec + get_random_int(0, 15).toString(16);
+        rand_hex = rand_hex + get_random_int(0, 15).toString(16);
     }
-    return init_vec;
+    return rand_hex;
 }
 
 // initialize all inputs
-async function init() {
+let decrypt_text_hex;
+function init() {
     let plaintext_hex = gen_plaintext();
-    let init_vector_hex = gen_init_vec();
+    let ciphertext_hex = gen_rand_hex()
+    let init_vector_hex = gen_rand_hex();
+    decrypt_text_hex = xor(init_vector_hex, plaintext_hex);
 
+    write_input(plaintext_input, plaintext_hex);
+    write_input(ciphertext_input, ciphertext_hex);
     write_input(init_vector_input, init_vector_hex);
+    write_input(decrypt_text_input, decrypt_text_hex);
+}
 
-    let key = await window.crypto.subtle.generateKey(
-        {
-            name: "AES-CBC",
-            length: 256,
-        },
-        true,
-        ["encrypt", "decrypt"]
-    );
+// update elements based on the initialization vector
+function update() {
+    let init_vector_hex = read_input(init_vector_input);
 
-    let ciphertext_uint8_arr = new Uint8Array(await window.crypto.subtle.encrypt(
-        {
-            name: "AES-CBC",
-            iv: hex_to_uint8_arr(init_vector_hex)
-        },
-        key,
-        hex_to_uint8_arr(plaintext_hex)
-    ));
+    let regexp = /[0-9a-f]{32}/g;
+    if (regexp.test(init_vector_hex)) {
+        let plaintext_hex = xor(init_vector_hex, decrypt_text_hex);
+        write_input(plaintext_input, plaintext_hex);
+        update_valid_box(plaintext_hex);
+    }
+}
 
-    write_input(ciphertext_input, uint8_arr_to_hex(ciphertext_uint8_arr));
+// update the xor equation output
+xor_input = document.querySelectorAll(".xor-equation >  input");
+function update_xor() {
+    let in1 = xor_input[0].value;
+    let in2 = xor_input[1].value;
+    console.log("yo")
 
-    let decrypt_text_uint8_arr = new Uint8Array(await window.crypto.subtle.decrypt(
-        {
-            name: "AES-CBC",
-            iv: hex_to_uint8_arr("00000000000000000000000000000000")
-        },
-        key,
-        ciphertext_uint8_arr.buffer));
-
-    write_input(decrypt_text_input, uint8_arr_to_hex(decrypt_text_uint8_arr));
-
-    write_input(plaintext_input, xor(init_vector_hex, uint8_arr_to_hex(decrypt_text_uint8_arr)));
+    let regexp = /[0-9a-f]{2}/g;
+    if (regexp.test(in1)) {
+        regexp.lastIndex = 0;
+        if (regexp.test(in2)) {
+            xor_input[2].value = xor(in1, in2);
+        }
+    }
 }
 
 init();
