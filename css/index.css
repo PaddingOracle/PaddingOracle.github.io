@@ -87,6 +87,14 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-evenly;
+    height: 100%;
+}
+
+.sidepanel-element {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .xor-equation {
@@ -120,7 +128,6 @@
     background-color: darkblue;
     position: absolute;
     width: 100%;
-    padding: 20px;
     height: 100%;
     z-index: 100;
     cursor: pointer;
