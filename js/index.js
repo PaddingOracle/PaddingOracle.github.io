@@ -4,6 +4,7 @@ decrypt_text_input = document.querySelectorAll(".decrypt-text-input >  input");
 init_vector_input = document.querySelectorAll(".init-vector-input >  input");
 plaintext_input = document.querySelectorAll(".plaintext-input >  input");
 
+
 // read and write to inputs
 function read_input(input) {
     let hex = "";
@@ -16,6 +17,32 @@ function read_input(input) {
 function write_input(input, hex) {
     for (let i = 0; i < 16; ++i) {
         input[i].value = hex.slice(2 * i, 2 * i + 2);
+    }
+}
+
+
+// update the plaintext validity box
+function is_valid(hex) {
+    for (let i = 1; i <= 16; ++i) {
+        let byte = i.toString().padStart(2, '0');
+
+        if (hex.endsWith(byte.repeat(i))) {
+            return true;
+        }
+    }
+    return false;
+}
+
+
+let valid_box = document.querySelector(".plaintext-validity");
+function update_valid_box(plaintext) {
+    if (is_valid(plaintext)) {
+        valid_box.innerHTML = "Plaintext is Valid";
+        valid_box.style.color = "green";
+    }
+    else {
+        valid_box.innerHTML = "Plaintext is Invalid";
+        valid_box.style.color = "red";
     }
 }
 
@@ -64,15 +91,30 @@ function gen_rand_hex() {
 }
 
 // initialize all inputs
-async function init() {
+let decrypt_text_hex;
+function init() {
     let plaintext_hex = gen_plaintext();
     let ciphertext_hex = gen_rand_hex()
     let init_vector_hex = gen_rand_hex();
+    decrypt_text_hex = xor(init_vector_hex, plaintext_hex);
 
     write_input(plaintext_input, plaintext_hex);
     write_input(ciphertext_input, ciphertext_hex);
     write_input(init_vector_input, init_vector_hex);
-    write_input(decrypt_text_input, xor(init_vector_hex, plaintext_hex));
+    write_input(decrypt_text_input, decrypt_text_hex);
+}
+
+// update elements based on the initialization vector
+function update() {
+    let init_vector_hex = read_input(init_vector_input);
+
+    let regexp = /[0-9a-f]{32}/g;
+    if (regexp.test(init_vector_hex)) {
+        console.log("edited")
+        let plaintext_hex = xor(init_vector_hex, decrypt_text_hex);
+        write_input(plaintext_input, plaintext_hex);
+        update_valid_box(plaintext_hex);
+    }
 }
 
 init();

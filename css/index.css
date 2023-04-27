@@ -71,14 +71,15 @@
     margin-top: -40px;
 }
 
-.xor-div{
+.xor-div {
     position: relative;
-    top: 100px; 
+    top: 100px;
     left: 200px;
     width: fit-content;
 
 }
-.xor-div-div{
+
+.xor-div-div {
     display: flex;
 }
 
@@ -88,14 +89,16 @@
     margin-right: 5px;
     margin-bottom: auto;
 }
+
 .decrypt-text-input {
     position: relative;
 }
+
 .plaintext-input {
     position: relative;
 }
 
-.xor-div input{
+.xor-div input {
     width: 30px;
 }
 
@@ -108,6 +111,7 @@
     z-index: 100;
     cursor: pointer;
 }
+
 .cover p {
     color: white;
     width: 100%;
@@ -118,10 +122,12 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-  }
+}
 
-  .display-none{
+.display-none {
     display: none;
-  }
+}
 
-  
+.plaintext-validity {
+    color: green
+}
